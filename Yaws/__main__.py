@@ -2,7 +2,7 @@
 
 import socket
 
-response = """HTTP/1.1 200 ok
+response_top = """HTTP/1.1 200 ok
 Content-Type: text/html
 
 <html>
@@ -12,7 +12,9 @@ Content-Type: text/html
 <p>some more shit</p>
 <p>So now to figure out how to change the font and font size, with maybe some other formatting.</p>
 <p>Too much shit, not enough fan.</p>
-</body>
+"""
+
+response_bottom = """</body>
 </html>
 """
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,7 +26,23 @@ while True:
     conn,addr = serversocket.accept()
 
     print("Got a connection form %s" % str(addr))
+    
+    response = response_top
 
-    conn.recv(4096)
+    request = conn.recv(4096).decode("utf-8")
+
+    # to do proccess request
+
+    for line in request.splitlines():
+        if line != "":
+            elements = line.split(": ", maxsplit=1)
+            if len(elements) == 1:
+                response+= "<li>" + elements[0] + "</li>\n"
+            else:
+                response+= "<li><b>" + elements[0] + "</b>:" + elements[1] + "</li>\n"
+        else:
+            pass
+
+    response+= response_bottom
     conn.send(response.encode('utf-8'))
     conn.close()
