@@ -7,7 +7,11 @@ Content-Type: text/html
 
 <html>
 <body>
-<h1>Hi, people</h1>
+<h1>Shit will break</h1>
+
+<p>some more shit</p>
+<p>So now to figure out how to change the font and font size, with maybe some other formatting.</p>
+<p>Too much shit, not enough fan.</p>
 </body>
 </html>
 """
@@ -21,5 +25,6 @@ while True:
 
     print("Got a connection form %s" % str(addr))
 
+    conn.recv(4096)
     conn.send(response.encode('utf-8'))
     conn.close()
