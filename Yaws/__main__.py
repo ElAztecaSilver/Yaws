@@ -2,6 +2,15 @@
 
 import socket
 
+response = """HTTP/1.1 200 ok
+Content-Type: text/html
+
+<html>
+<body>
+<h1>Hi, people</h1>
+</body>
+</html>
+"""
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serversocket.bind(("0.0.0.0", 8080))
 serversocket.listen(6)
@@ -12,5 +21,5 @@ while True:
 
     print("Got a connection form %s" % str(addr))
 
-    conn.send("Welcome to my server.".encode('utf-8'))
+    conn.send(response.encode('utf-8'))
     conn.close()
