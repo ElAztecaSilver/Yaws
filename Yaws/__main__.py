@@ -1,5 +1,5 @@
 #!/usr/bin/env pyhton3
-
+import Yaws.http as http
 import socket
 
 response_top = """HTTP/1.1 200 ok
@@ -29,6 +29,7 @@ while True:
     
     response = response_top
 
+    request = http.Request(conn)
     request = conn.recv(4096).decode("utf-8")
 
     # to do proccess request
