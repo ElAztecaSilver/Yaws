@@ -30,19 +30,11 @@ while True:
     response = response_top
 
     request = http.Request(conn)
-    request = conn.recv(4096).decode("utf-8")
 
     # to do proccess request
 
-    for line in request.splitlines():
-        if line != "":
-            elements = line.split(": ", maxsplit=1)
-            if len(elements) == 1:
-                response+= "<li>" + elements[0] + "</li>\n"
-            else:
-                response+= "<li><b>" + elements[0] + "</b>:" + elements[1] + "</li>\n"
-        else:
-            pass
+    for key, value in request.headers.items():
+        response+= "<li><b>" + key + "</b>:" + value + "</li>\n"
 
     response+= response_bottom
     conn.send(response.encode('utf-8'))
